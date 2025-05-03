@@ -65,12 +65,14 @@ class ScheduledClassController extends Controller
      */
     public function destroy(ScheduledClass $schedule): RedirectResponse
     {
-        dump(auth()->id());
-        dump($schedule->instructor_id);
-
-        if (auth()->id() !== $schedule->instructor_id) {
+        //use policy ScheduledClassPolicy->delete()
+        if (auth()->user()->cannot('delete', $schedule)) {
             abort(403, 'You are not authorized to delete this class.');
         }
+
+        // if (auth()->id() !== $schedule->instructor_id) {
+        //     abort(403, 'You are not authorized to delete this class.');
+        // }
 
         $schedule->delete();
 

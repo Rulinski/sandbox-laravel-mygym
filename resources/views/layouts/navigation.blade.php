@@ -15,6 +15,14 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @can('schedule-class')
+                        <x-nav-link :href="route('schedule.create')" :active="request()->routeIs('schedule.create')">
+                            Schedule a class
+                        </x-nav-link>
+                        <x-nav-link :href="route('schedule.index')" :active="request()->routeIs('schedule.index')">
+                            Upcoming classes
+                        </x-nav-link>
+                    @endcan
                 </div>
             </div>
 
@@ -83,6 +91,14 @@
                 <x-responsive-nav-link :href="route('profile.edit')">
                     {{ __('Profile') }}
                 </x-responsive-nav-link>
+                @can('schedule-class')
+                    <x-responsive-nav-link :href="route('schedule.create')">
+                        Schedule a class
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('schedule.index')">
+                        Upcoming classes
+                    </x-responsive-nav-link>
+                @endcan
 
                 <!-- Authentication -->
                 <form method="POST" action="{{ route('logout') }}">
