@@ -16,7 +16,7 @@ class BookingController extends Controller
      */
     public function index(): View
     {
-        $bookings = auth()->user()->bookings()->where('date_time','>',now())->get();
+        $bookings = auth()->user()->bookings()->upcoming()->get();
 
         return view('member.upcoming', compact('bookings'));
     }
@@ -27,10 +27,10 @@ class BookingController extends Controller
      * @return View
      */
     public function create(): View
-
     {
-        $scheduledClasses = scheduledClass::where('date_time', '>', now())
-            ->with('classType', 'instructor')
+        $scheduledClasses = scheduledClass::upcoming()
+            ->with('classType', 'instructor') //eager loading
+            ->notBooked()
             ->oldest()->get();
 
         return view('member.book', compact('scheduledClasses'));

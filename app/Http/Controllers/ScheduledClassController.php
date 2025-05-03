@@ -17,7 +17,7 @@ class ScheduledClassController extends Controller
      */
     public function index(): View
     {
-        $scheduledClasses = auth()->user()->scheduledClasses()->where('date_time','>',now())->oldest('date_time')->get();
+        $scheduledClasses = auth()->user()->scheduledClasses()->upcoming()->oldest('date_time')->get();
 
         return view('instructor.scheduled-classes', ['scheduledClasses' => $scheduledClasses]);
     }
@@ -45,7 +45,7 @@ class ScheduledClassController extends Controller
 
         $request->merge([
             'date_time' => $date_time,
-            'instructor_id' => auth()->user()->id
+            'instructor_id' => auth()->id()
         ]);
 
         $validated = $request->validate([
