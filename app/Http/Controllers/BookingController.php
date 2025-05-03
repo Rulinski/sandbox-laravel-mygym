@@ -16,7 +16,7 @@ class BookingController extends Controller
      */
     public function index(): View
     {
-        $bookings = auth()->user()->bookings()->upcoming()->get();
+        $bookings = auth()->user()->bookings()->upcoming()->oldest('date_time')->get();
 
         return view('member.upcoming', compact('bookings'));
     }
@@ -31,7 +31,7 @@ class BookingController extends Controller
         $scheduledClasses = scheduledClass::upcoming()
             ->with('classType', 'instructor') //eager loading
             ->notBooked()
-            ->oldest()->get();
+            ->oldest('date_time')->get();
 
         return view('member.book', compact('scheduledClasses'));
     }
