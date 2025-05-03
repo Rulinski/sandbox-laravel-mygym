@@ -9,6 +9,9 @@ class ScheduledClass extends Model
 {
     use HasFactory;
 
+    protected $guarded = null;
+    protected $casts = ['date_time' => 'datetime:Y-m-d H:i:s'];
+
     public function instructor(): \Illuminate\Database\Eloquent\Relations\BelongsTo
     {
         return $this->belongsTo(User::class, 'instructor_id');
