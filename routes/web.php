@@ -12,15 +12,15 @@ Route::get('/dashboard', DashboardController::class)->middleware(['auth'])->name
 
 Route::get('/dashboard/instructor', function () {
     return view('instructor.dashboard');
-})->middleware(['auth'])->name('dashboard.instructor');
+})->middleware(['auth','role:instructor'])->name('dashboard.instructor');
 
 Route::get('/dashboard/member', function () {
     return view('member.dashboard');
-})->middleware(['auth'])->name('dashboard.member');
+})->middleware(['auth','role:member'])->name('dashboard.member');
 
 Route::get('/dashboard/admin', function () {
     return view('admin.dashboard');
-})->middleware(['auth'])->name('dashboard.admin');
+})->middleware(['auth','role:admin'])->name('dashboard.admin');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
