@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ClassCanceled;
 use App\Models\ClassType;
 use App\Models\ScheduledClass;
 use Illuminate\Http\RedirectResponse;
@@ -70,11 +71,10 @@ class ScheduledClassController extends Controller
             abort(403, 'You are not authorized to delete this class.');
         }
 
-        // if (auth()->id() !== $schedule->instructor_id) {
-        //     abort(403, 'You are not authorized to delete this class.');
-        // }
+        ClassCanceled::dispatch($schedule);
 
         $schedule->delete();
+        $schedule->members()->detach();
 
         return redirect()->route('schedule.index')->with('message', 'Class deleted');
     }
