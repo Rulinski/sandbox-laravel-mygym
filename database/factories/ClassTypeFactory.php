@@ -27,12 +27,12 @@ class ClassTypeFactory extends Factory
             45, 50, 60
         ];
 
-        $name = $this->faker->unique()->randomElement($classTypes);
+        $name = fake()->unique()->randomElement($classTypes);
 
         return [
             'name' => $name,
-            'description' => $this->faker->paragraph(1),
-            'minutes' => $this->faker->randomElement($minutes),
+            'description' => fake()->paragraph(1),
+            'minutes' => fake()->randomElement($minutes),
         ];
     }
 }
